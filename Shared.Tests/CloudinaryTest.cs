@@ -2550,6 +2550,23 @@ namespace CloudinaryDotNet.Test
             Assert.AreEqual(string.Format("{0}.zip", targetPublicId), result.PublicId);
             Assert.AreEqual(1, result.FileCount);
         }
+        
+        /// <summary>
+        /// Should call CreateArchive with "zip" format
+        /// </summary>
+        [Test]
+        public void TestCreateZip()
+        {
+            string archiveTag = string.Format(string.Concat(m_test_tag, "_{0}"), UnixTimeNow());
+            string targetPublicId = string.Format(string.Concat("zip_archive_id_{0}_", m_suffix), UnixTimeNow());
+
+            UploadImageForTestArchive(archiveTag, 2.0, true);
+
+            ArchiveParams parameters = new ArchiveParams().Tags(new List<string> { archiveTag, "sadf" }).TargetPublicId(targetPublicId);
+            ArchiveResult result = m_cloudinary.CreateZip(parameters);
+            Assert.AreEqual(string.Format("{0}.zip", targetPublicId), result.PublicId);
+            Assert.AreEqual(1, result.FileCount);
+        }
 
         [Test]
         public void TestDownloadArchiveUrl()
